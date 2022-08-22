@@ -1,0 +1,51 @@
+
+
+
+<input type="text" [(ngModel)]="num1">
+
+<input type="text" [(ngModel)]="num2"> 
+
+<!-- 
+<input type="text" [(ngModel)]="num1">
+
+<input type="text" [(ngModel)]="num2">
+ -->
+
+<button (click)="disp()"> click me </button>
+
+
+{{sumvar}}
+
+
+-------------------------------------------ts 
+
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+num1:number=0;
+num2:number=0;
+
+sumvar:number=0;
+
+disp()
+{
+
+//this.sumvar=parseInt(this.num1)+ parseInt(this.num2);
+
+this.sumvar=this.num1+this.num2;
+}
+
+
+
+}
+
+
+
+
