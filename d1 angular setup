@@ -1,0 +1,24 @@
+install node
+
+install vs code
+
+
+open cmd
+ 
+
+npm install -g angular
+
+
+npm install -g typescript
+
+
+npm install -g @angular/cli
+
+
+create a folder for angular demos
+
+
+open terminal on that folder 
+
+
+ng new demo1
