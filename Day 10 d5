@@ -1,0 +1,58 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+  name="john cena";
+
+  type="text";
+
+  btnText="hide";
+  changeVal()
+  {
+    if(this.type=='text')
+    {
+    this.type="password";
+    this.btnText="show";
+    
+  }
+    else
+   {
+    this.type="text";
+    this.btnText="hide";
+   
+  }
+  
+  }
+
+
+}
+
+---------------------------html 
+
+
+
+<input type="text" value="hello">
+
+
+<input type="text" value="name">
+
+
+
+<input type="text" [value]="name">
+<br>
+
+
+<input [type]="type" value="hello world">
+
+<!-- <input type="password" value="hello world"> -->
+
+
+<button (click)="changeVal()"> {{btnText}} password </button> 
+
+
+
