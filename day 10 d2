@@ -1,0 +1,43 @@
+------------app.comp.ts 
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'demo1';
+
+  name='john';
+
+ // num1:string='hello';
+
+
+ num1=12;
+ num2=20;
+ 
+  constructor()
+  {
+   // this.num1=10;
+  }
+
+}
+
+
+----------------app.comp.html 
+
+
+
+<h1> hello world welcome to ANGULAR apps</h1>
+ 
+
+<p> hello {{name}}</p>
+
+{{10+20}}
+
+
+<br>
+
+sum of {{num1}} and {{num2}} is = {{num1 + num2}}
