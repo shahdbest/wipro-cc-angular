@@ -1,0 +1,50 @@
+
+
+
+<input type="text" [(ngModel)]="num1">
+
+<input type="text" [(ngModel)]="num2"> 
+
+<!-- 
+<input type="text" [(ngModel)]="num1">
+
+<input type="text" [(ngModel)]="num2">
+ -->
+
+<button (click)="disp()"> click me </button>
+
+
+{{sumvar}}
+
+----------------------------------------------ts 
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+num1:number=0;
+num2:number=0;
+
+sumvar=0;
+
+disp()
+{
+  //this.num1='test';//error 
+  
+  //this.num1 = test22 runtime ts is converted in js
+
+console.log(this.num1);
+//this.sumvar=parseInt(this.num1)+ parseInt(this.num2);
+
+this.sumvar=this.num1+this.num2;
+}
+
+
+
+}
+
