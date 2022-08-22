@@ -1,0 +1,45 @@
+
+
+<input type="text" value="hello">
+
+
+<input type="text" value="name">
+
+
+
+<input type="text" [value]="name">
+<br>
+
+
+<input [type]="type" value="hello world">
+
+<!-- <input type="password" value="hello world"> -->
+
+
+<button (click)="changeVal()"> hide password </button> 
+
+
+------------------------------ts 
+
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+  name="john cena";
+
+  type="text";
+
+  changeVal()
+  {
+this.type="password";
+
+  }
+
+
+}
