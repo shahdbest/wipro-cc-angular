@@ -1,0 +1,23 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+  pclr="pink";
+
+}
+
+
+---------------------------------html 
+
+<p style="background-color:green ;"> this is green p tag </p>
+
+
+<p [style.background-color]="pclr"> this is coloured p tag </p>
+
+
+<input type="text" [(ngModel)]="pclr">
