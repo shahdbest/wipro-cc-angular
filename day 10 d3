@@ -1,0 +1,63 @@
+-------------------------------app.comp.ts
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'demo1';
+
+  name='john';
+
+ // num1:string='hello';
+
+
+ num1=12;
+ num2=20;
+sumVar=0;
+  constructor()
+  {
+   // this.num1=10;
+  }
+
+
+  sum()
+  {
+
+this.sumVar=this.num1+this.num2; 
+  }
+
+}
+
+
+----------------------------------------------------app.comp.html 
+
+
+
+<h1> hello world welcome to ANGULAR apps</h1>
+ 
+
+<p> hello {{name}}</p>
+
+{{10+20}}
+
+
+<br>
+
+sum of {{num1}} and {{num2}} is = {{num1 + num2}}
+
+
+
+
+<button (click)="sum()"> click me </button>
+sum of 2 nums is {{sumVar}}
+
+<button (dblclick)="sum()">dbl click me </button>
+
+
+<button (mouseenter)="sum()">mouse click me </button>
+
+
