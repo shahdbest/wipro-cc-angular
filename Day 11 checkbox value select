@@ -1,0 +1,47 @@
+
+
+
+
+<input type="checkbox" name="skills" [(ngModel)]="skills[0]" >{{checkVals[0]}}
+
+<input type="checkbox"  name="skills" [(ngModel)]="skills[1]" >{{checkVals[1]}}
+
+<input type="checkbox"  name="skills" [(ngModel)]="skills[2]" >{{checkVals[2]}}
+
+<button (click)="showVal()"> show value</button>
+
+
+
+
+
+----------------------ts 
+
+
+
+import { Component } from '@angular/core';
+import { Student } from 'src/student.model';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+
+
+  checkVals=["java","html","css"];
+
+
+  skills:any[]=[];
+  showVal()
+  {
+
+    for(let i=0;i<this.checkVals.length;i++)
+    {
+      if(this.skills[i]==true)
+      console.log(this.checkVals[i])
+    }
+  
+}
+}
