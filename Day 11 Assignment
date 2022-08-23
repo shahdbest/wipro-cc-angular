@@ -1,0 +1,18 @@
+--create a user model with the following properties 
+  userName
+  password
+  confirmpassword
+  email
+  city {hyd,bang,mum,pune,mysore}
+  gender
+  dob 
+  contactnumber
+  skills -> java , spring , angular , js , html , css , ts bs  -> multiple choice
+   
+  
+  -----------------------------------------------------------
+  
+create a component to accept user details from user -> design a form to accept the values 
+
+ create an array of users and display all users  on html page 
+
