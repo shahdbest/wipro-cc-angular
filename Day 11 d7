@@ -1,0 +1,77 @@
+
+roll no {{student.rollNo}}
+<br>
+name 
+{{student.name}}
+<br>
+gender
+{{student.gender}}
+<br>
+sem
+{{student.sem}}
+<br>
+marks
+{{student.marks}}
+
+<br>
+
+<br>
+
+
+<p> student 1 details </p>
+
+
+
+roll no {{student1.rollNo}}
+<br>
+name 
+{{student1.name}}
+<br>
+gender
+{{student1.gender}}
+<br>
+sem
+{{student1.sem}}
+<br>
+marks
+{{student1.marks}}
+
+
+
+
+-----------------------------------ts 
+
+
+
+import { Component } from '@angular/core';
+import { Student } from 'src/student.model';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+
+  student:Student;
+  student1:Student;
+  
+//java code Student student=new Student()
+  constructor()
+  {
+    this.student=new Student();
+    this.student.rollNo=10;
+    this.student.gender='Male';
+    this.student.name='John';
+    this.student.marks=100;
+    this.student.sem=5;
+
+    //----------------
+
+    this.student1={'rollNo':2,'gender':'male','name':'rock','marks':56,'sem':6}
+
+  }
+
+
+}
