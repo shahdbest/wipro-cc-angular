@@ -1,0 +1,63 @@
+
+
+<select (change)="changeVal()" [(ngModel)]="selectedState"> 
+
+<option *ngFor="let state of states"> {{state}} </option> 
+
+</select>
+{{stateCode}}
+
+<ul> 
+
+<li *ngFor="let state of states"> {{state}} </li>
+
+</ul>
+
+
+
+<ol> 
+
+    <li *ngFor="let state of states"> {{state}} </li>
+    
+    </ol>
+
+
+
+------------------------------------------------------ts
+
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+  states=['karnataka','maharastra','andra'];
+
+  selectedState="";
+  stateCode='';
+
+  constructor()
+  {
+    // for(let i=0;i<this.states.length;i++)
+    // {
+    //    console.log( this.states[i]);
+    // }
+  }
+
+  changeVal()
+  {
+  console.log('value CHANGED ' + this.selectedState);
+  if(this.selectedState=='karnataka')  
+  this.stateCode="KA"
+ else if(this.selectedState=='maharastra')  
+  this.stateCode="MH"
+ else
+  this.stateCode="AP"
+ 
+}
+
+}
