@@ -1,0 +1,90 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+  states=['karnataka','maharastra','andra'];
+
+  cities=[['bijapur','bangalore','mysore','hubli'],['sholapur','pune','mumbai'],['kadapa','vijayawada']]
+
+
+  selectedState="";
+  stateCode='';
+
+  selectedCities:string[]=[];
+
+  changeVal()
+  {
+
+  if(this.selectedState=='karnataka')  
+  {  
+  this.stateCode="KA"
+ console.log(this.states.indexOf(this.selectedState))
+    console.log(this.cities[this.states.indexOf(this.selectedState)])
+
+    this.selectedCities=this.cities[this.states.indexOf(this.selectedState)];
+
+}
+else if(this.selectedState=='maharastra')  
+{  
+  console.log(this.states.indexOf(this.selectedState))
+    this.stateCode="MH"
+    console.log(this.cities[this.states.indexOf(this.selectedState)])
+
+    this.selectedCities=this.cities[this.states.indexOf(this.selectedState)];
+
+  } 
+else
+{ 
+  console.log(this.states.indexOf(this.selectedState))
+    this.stateCode="AP"
+    console.log(this.cities[this.states.indexOf(this.selectedState)])
+
+    this.selectedCities=this.cities[this.states.indexOf(this.selectedState)];
+
+  }
+
+}
+
+}
+
+
+-----------------html 
+
+
+
+<select (change)="changeVal()" [(ngModel)]="selectedState"> 
+
+<option *ngFor="let state of states"> {{state}} </option> 
+
+</select>
+{{stateCode}}
+
+
+<select> 
+
+    <option *ngFor="let city of selectedCities"> {{city}} </option> 
+    
+    </select>
+    
+
+
+<ul> 
+
+<li *ngFor="let state of states"> {{state}} </li>
+
+</ul>
+
+
+
+<ol> 
+
+    <li *ngFor="let state of states"> {{state}} </li>
+    
+    </ol>
+
+
