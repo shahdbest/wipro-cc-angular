@@ -1,0 +1,59 @@
+----------ts 
+
+import { Component } from '@angular/core';
+import { Student } from 'src/student.model';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+
+  student:Student;
+//java code Student student=new Student()
+  constructor()
+  {
+    this.student=new Student();
+    //this.student.rollNo=10;
+    //this.student.gender='Male';
+    this.student.name='John';
+    this.student.marks=100;
+    this.student.sem=5;
+
+
+  }
+
+
+}
+
+
+-----------html 
+
+
+
+<input type="number" [(ngModel)]="student.rollNo">
+
+<input type="radio" value="M" [(ngModel)]="student.gender"> male
+<input type="radio" value="F" [(ngModel)]="student.gender"> female
+<input type="radio" value="O" [(ngModel)]="student.gender"> other
+
+
+<br>
+
+roll no {{student.rollNo}}
+<br>
+name 
+{{student.name}}
+<br>
+gender
+{{student.gender}}
+<br>
+sem
+{{student.sem}}
+<br>
+marks
+{{student.marks}}
+
+
