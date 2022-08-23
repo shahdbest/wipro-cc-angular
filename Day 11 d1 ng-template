@@ -1,0 +1,34 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+  epclr="green";
+  nepclr="red";
+
+  age;
+
+
+}
+
+
+------------------------html 
+
+
+
+
+<input type="text" [(ngModel)]="age">
+
+
+<p *ngIf="age >= 18 && age <= 50 ; else myelsBlock"  [style.background-color]="epclr">  you are eligible for the job </p> 
+
+
+<ng-template #myelsBlock>
+<p  [style.background-color]="nepclr">  you are not eligible for the job </p> 
+</ng-template>
+
+
