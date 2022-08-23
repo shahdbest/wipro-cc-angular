@@ -1,0 +1,50 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+  states=['karnataka','maharastra','andra'];
+
+
+  constructor()
+  {
+    // for(let i=0;i<this.states.length;i++)
+    // {
+    //    console.log( this.states[i]);
+    // }
+  }
+
+}
+
+
+-------------------------html 
+
+
+
+<select> 
+
+<option *ngFor="let state of states"> {{state}} </option> 
+
+</select>
+
+
+<ul> 
+
+<li *ngFor="let state of states"> {{state}} </li>
+
+</ul>
+
+
+
+<ol> 
+
+    <li *ngFor="let state of states"> {{state}} </li>
+    
+    </ol>
+
+
+
