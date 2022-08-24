@@ -1,0 +1,96 @@
+import { Component } from '@angular/core';
+import { Student } from 'src/student.model';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+name='any name';
+
+money=10;
+
+moneyDollar:string='$10.00';
+
+now=new Date();
+
+}
+
+
+-------------------------------------------html 
+
+
+
+
+
+{{name}}
+
+<br>
+
+{{name|uppercase}}
+
+<br>
+{{name}}
+
+<br> 
+
+{{money}}
+
+
+<br> 
+
+{{money|currency}}
+
+<br>
+{{moneyDollar}}
+
+<br>
+<p> add 15$ to existing vars</p>
+
+<br> 
+
+{{money+15|currency}}
+
+<br>
+{{moneyDollar+15}}
+
+
+<br>
+
+{{money|currency:'INR'}}
+
+
+
+<br>
+
+{{money|currency:'EUR'}}
+
+<br>
+
+{{money|currency:'GBP'}}
+
+<br>
+{{now}}
+
+
+<br>
+{{now|date:'shortDate'}}
+
+
+<br>
+{{now|date:'dd/MM/yyyy'}}
+
+
+
+
+<br>
+{{now|date:'dd/mm/yyyy'}}
+
+
+<br>
+{{now|date:'hh:mm'}}
+
+
+
