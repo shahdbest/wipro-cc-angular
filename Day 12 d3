@@ -1,0 +1,105 @@
+
+
+
+<p>  add student  </p>
+<label> roll no</label> 
+<input type="text" [(ngModel)]="student.rollNo" >
+ 
+
+<label> gender </label> 
+<input type="text" [(ngModel)]="student.gender" >
+
+<label> sem</label> 
+<input type="text" [(ngModel)]="student.sem" >
+
+<label> name</label> 
+<input type="text" [(ngModel)]="student.name" >
+
+<label> marks</label> 
+<input type="text" [(ngModel)]="student.rollNo" >
+
+
+
+
+
+<p>  result   </p>
+
+<table> 
+
+    <tr> 
+        <td> Roll no </td> 
+        <td> Gender </td>
+        <td> Name </td>
+        <td> Marks </td>
+        <td> Sem </td>
+    
+    </tr>
+
+
+    <tr *ngFor="let student of students"> 
+        <td> {{student.rollNo}} </td> 
+        <td> {{student.gender}} </td>
+        <td> {{student.name}} </td>
+        <td> {{student.marks}} </td>
+        <td> {{student.sem}} </td>
+    
+    </tr>
+
+
+</table>
+
+{{'hello'|uppercase}}
+<br>
+<br>
+<br>
+<p> below r custom pipes</p>
+
+
+{{'hello'|testpipe}}
+
+<br>
+<br>
+
+{{'new val '|testpipe:'U'}}
+
+
+
+<br>
+{{'wiPRO'|testpipe}}
+
+<br>
+
+{{'wiPRO'|testpipe:'L'}}
+
+
+-------------------------------------------------------mycustom.pipe.ts 
+
+import { Pipe, PipeTransform } from "@angular/core";
+
+@Pipe({name:'testpipe'})
+export class MyPipe implements PipeTransform
+{
+    transform(value: any, ...type: any[]) {
+        
+        if(type.length>0)
+        {
+        if(type[0].toUpperCase()=='U'){
+            let val= value+"";
+            val=val.toUpperCase()
+            return val;
+            }
+            else if(type[0].toUpperCase()=='L'){
+                let val= value+"";
+                val=val.toLowerCase();
+                return val;
+                }
+        }
+            else
+            return value;
+    
+
+    }
+}
+
+
+
