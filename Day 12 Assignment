@@ -1,0 +1,14 @@
+add a new field to Student model in previous piep example .. maratial status --> married or unmarried
+for female students if unmarried append miss else append mrs
+
+
+
+Roll no	Gender	Name	Marks	Sem   ms
+2	male	Mr.rock	56	6     
+3	male	john	57	5
+4	male	brock	58	4
+5	female	mrs.preeti 58	4          married
+6	female	missprachi	58	4         unmarried
+---------------------------------------------
+
+
