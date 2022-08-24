@@ -1,0 +1,257 @@
+ng g c view
+ng g c add
+ng g s student
+
+---------------------------------------------student.service.ts 
+
+import { Injectable } from '@angular/core';
+import { Student } from 'src/student.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class StudentService {
+
+  students:Student[]=[];
+  constructor() { 
+
+   let stud1 ={'rollNo':2,'gender':'male','name':'rock','marks':56,'sem':6}
+   let stud2 ={'rollNo':3,'gender':'male','name':'john','marks':57,'sem':5}
+   let stud3 ={'rollNo':4,'gender':'male','name':'brock','marks':58,'sem':4}
+
+   let stud4 ={'rollNo':5,'gender':'female','name':'preeti','marks':57,'sem':5}
+   let stud5 ={'rollNo':6,'gender':'female','name':'prachi','marks':58,'sem':4}
+
+
+   this.students.push(stud1);
+   this.students.push(stud2);
+   this.students.push(stud3);
+   this.students.push(stud4);
+   this.students.push(stud5);
+
+  }
+
+  
+  addStudent(student:Student)
+  {
+
+  
+    this.students.push(student);
+  }
+
+  public  getStudents():Student[]
+  {
+    return this.students;
+  }
+
+}
+
+----------------------------------model 
+
+
+
+export class Student
+{
+
+    rollNo:number=0;
+
+    gender:string='';
+
+    name='';
+    marks=0;
+    sem=0;
+
+
+//int -Integer
+}
+
+
+---------------------------------------app.comp.html 
+
+
+
+
+
+<p> add student </p>
+<app-add> </app-add>
+
+
+
+
+<p> view students </p>
+<app-view> </app-view>
+
+
+------------------------------------------add.comp.htm
+
+<table> 
+
+    <tr> 
+    <td> 
+<label> roll no</label>
+</td>
+<td>  
+<input type="text" [(ngModel)]="student.rollNo" >
+</td>
+
+</tr>
+
+
+<tr>
+<td> 
+<label> gender </label> 
+</td>
+
+<td> 
+<input type="text" [(ngModel)]="student.gender" >
+</td>
+
+</tr>
+
+<tr> 
+    <td> 
+<label> sem</label> 
+</td>
+
+<td> 
+<input type="text" [(ngModel)]="student.sem" >
+</td>
+
+</tr>
+
+<tr>  
+<td> 
+<label> name</label> 
+</td>
+
+<td> 
+<input type="text" [(ngModel)]="student.name" >
+</td>
+
+</tr>
+
+
+<tr> 
+<td> 
+<label> marks</label> 
+</td>
+
+<td> 
+<input type="text" [(ngModel)]="student.marks" >
+</td>
+</tr>
+
+<tr> 
+<td>
+
+</td>
+
+
+<td> 
+<button (click)="addStudent(student)"> add </button>
+</td>
+</tr>
+</table>
+
+----------------------add.comp.ts 
+
+import { Component, OnInit } from '@angular/core';
+import { Student } from 'src/student.model';
+import { StudentService } from '../student.service';
+
+@Component({
+  selector: 'app-add',
+  templateUrl: './add.component.html',
+  styleUrls: ['./add.component.css']
+})
+export class AddComponent  {
+
+  students:Student[]=[];
+
+  student:Student;
+  
+  constructor(private studSrv:StudentService)
+  {
+    this.student=new Student();
+  }
+
+  addStudent(student:Student)
+  {
+
+    let stud={rollNo:student.rollNo,gender:student.gender,name:student.name,marks:student.marks,sem:student.sem};
+
+    this.studSrv.addStudent(stud);
+  }
+
+}
+
+
+-----------------------------view.comp.html 
+
+
+
+
+
+<table> 
+
+    <tr> 
+        <td> Roll no </td> 
+        <td> Gender </td>
+        <td> Name </td>
+        <td> Marks </td>
+        <td> Sem </td>
+    
+    </tr>
+
+
+    <tr *ngFor="let student of students"> 
+        <td> {{student.rollNo}} </td> 
+        <td> {{student.gender}} </td>
+        <td> {{student.name|gender:student.gender}} </td>
+        <td> {{student.marks}} </td>
+        <td> {{student.sem}} </td>
+    
+    </tr>
+
+
+</table>
+
+
+---------------------view.comp.ts
+
+
+import { Component, OnInit } from '@angular/core';
+import { Student } from 'src/student.model';
+import { AddComponent } from '../add/add.component';
+import { StudentService } from '../student.service';
+
+@Component({
+  selector: 'app-view',
+  templateUrl: './view.component.html',
+  styleUrls: ['./view.component.css']
+})
+export class ViewComponent implements OnInit {
+
+  students:Student[]=[];
+
+//private studSrv:StudentService;
+  //dependency injection 
+  constructor(private studSrv:StudentService) { 
+
+  //  this.studSrv=studSrv;
+  }
+
+
+  ngOnInit(): void {
+    this.students =this.studSrv.getStudents();
+  }
+
+
+
+}
+
+
+
+
+
+
