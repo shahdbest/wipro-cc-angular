@@ -1,0 +1,166 @@
+----------app.comp.html 
+
+
+
+
+<p>  add student  </p>
+<label> roll no</label> 
+<input type="text" [(ngModel)]="student.rollNo" >
+ 
+
+<label> gender </label> 
+<input type="text" [(ngModel)]="student.gender" >
+
+<label> sem</label> 
+<input type="text" [(ngModel)]="student.sem" >
+
+<label> name</label> 
+<input type="text" [(ngModel)]="student.name" >
+
+<label> marks</label> 
+<input type="text" [(ngModel)]="student.marks" >
+
+
+<button (click)="addStudent(student)"> add </button>
+
+
+<p>  result   </p>
+
+<table> 
+
+    <tr> 
+        <td> Roll no </td> 
+        <td> Gender </td>
+        <td> Name </td>
+        <td> Marks </td>
+        <td> Sem </td>
+    
+    </tr>
+
+
+    <tr *ngFor="let student of students"> 
+        <td> {{student.rollNo}} </td> 
+        <td> {{student.gender}} </td>
+        <td> {{student.name|gender:student.gender}} </td>
+        <td> {{student.marks}} </td>
+        <td> {{student.sem}} </td>
+    
+    </tr>
+
+
+</table>
+
+
+----------------app.comp.ts 
+
+
+import { Component } from '@angular/core';
+import { Student } from 'src/student.model';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+
+  students:Student[]=[];
+
+  student:Student;
+  
+
+//Student students=new Student[10];
+
+//java code Student student=new Student()
+  constructor()
+  {
+
+    this.student=new Student();
+   let stud1 ={'rollNo':2,'gender':'male','name':'rock','marks':56,'sem':6}
+   let stud2 ={'rollNo':3,'gender':'male','name':'john','marks':57,'sem':5}
+   let stud3 ={'rollNo':4,'gender':'male','name':'brock','marks':58,'sem':4}
+
+   let stud4 ={'rollNo':5,'gender':'female','name':'preeti','marks':57,'sem':5}
+   let stud5 ={'rollNo':6,'gender':'female','name':'prachi','marks':58,'sem':4}
+
+
+   this.students.push(stud1);
+   this.students.push(stud2);
+   this.students.push(stud3);
+   this.students.push(stud4);
+   this.students.push(stud5);
+  }
+
+
+  addStudent(student:Student)
+  {
+
+    //let stud=new Student();
+    let stud={rollNo:student.rollNo,gender:student.gender,name:student.name,marks:student.marks,sem:student.sem};
+
+    this.students.push(stud);
+  }
+
+
+  
+}
+
+
+------------------------------------------------gender.pipe.ts 
+
+
+
+
+import { Pipe, PipeTransform } from "@angular/core";
+
+@Pipe({name:'gender'})
+export class Gender implements PipeTransform
+{
+    transform(value: any,  gender:string) {
+      
+        if(gender.toUpperCase()=='MALE')
+        return 'Mr. '+value;
+        
+        else if(gender.toUpperCase()=='FEMALE')
+        return 'Miss. '+value;
+
+    }
+
+    
+}
+
+---------------app.module.ts 
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { MenuComponent } from './menu/menu.component';
+import { FormsModule } from '@angular/forms';
+import { AddressComponent } from './address/address.component';
+import { MyPipe } from 'src/mycustom.pipe';
+import { Gender } from 'src/gender.pipe';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    MenuComponent,
+    AddressComponent,
+    MyPipe,
+    Gender
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule
+    
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+
