@@ -1,0 +1,75 @@
+
+note : create a file called mycustom.pipe.ts
+
+once a pipe is created ensure u add the pipe in declaration array of app.module.ts
+---------------------------mycutom.pipe.ts
+
+import { Pipe, PipeTransform } from "@angular/core";
+
+@Pipe({name:'testpipe'})
+export class MyPipe implements PipeTransform
+{
+    transform(value: any) {
+       
+        //return  value+' test pipe applied';
+        let val= value+"";
+        val=val.toUpperCase()
+        console.log('val '+val);
+        return val;
+    }
+
+}
+
+
+-----------------------app.module.ts 
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { MenuComponent } from './menu/menu.component';
+import { FormsModule } from '@angular/forms';
+import { AddressComponent } from './address/address.component';
+import { MyPipe } from 'src/mycustom.pipe';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    MenuComponent,
+    AddressComponent,
+    MyPipe
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule
+    
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+----------------------app.comp.html 
+
+
+{{'hello'|uppercase}}
+<br>
+<br>
+<br>
+
+{{'hello'|testpipe}}
+
+<br>
+<br>
+
+{{'new val '|testpipe}}
+
+
+
+<br>
+<br>
+
+{{'wipro'|testpipe}}
+
