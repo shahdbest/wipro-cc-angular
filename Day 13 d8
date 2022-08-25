@@ -1,0 +1,78 @@
+
+ng new demo3
+
+ng g c home
+ng g c about
+ng g c contact
+ng g c services
+ng g c services/carwash
+ng g c services/carrest  --> by typo i created CarRent as CarRest ensure u create it as CarRent and make changes accordingly
+ng g c services/dentingandrepair
+
+
+
+
+-------app-routing.module.ts
+
+
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { AboutComponent } from './about/about.component';
+import { ContactComponent } from './contact/contact.component';
+import { HomeComponent } from './home/home.component';
+import { CarrestComponent } from './services/carrest/carrest.component';
+import { CarwashComponent } from './services/carwash/carwash.component';
+import { DentingandrepairComponent } from './services/dentingandrepair/dentingandrepair.component';
+import { ServicesComponent } from './services/services.component';
+
+const routes: Routes = [
+
+  {path:'home',component:HomeComponent},
+  {path:'about',component:AboutComponent},
+  {path:'contact',component:ContactComponent},
+  {path:'services',component:ServicesComponent,
+  children:[
+  {path:'carwash',component:CarwashComponent},
+  {path:'carrent',component:CarrestComponent},
+  {path:'dnr',component:DentingandrepairComponent},
+  ]
+  }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+
+
+----------------app.comp.html
+
+
+<ul> 
+
+  <li > <a routerLink="home">  home </a> </li>
+  <li > <a routerLink="about">  about </a> </li>
+  <li > <a routerLink="contact">  contact us </a> </li>
+  <li > <a routerLink="services"> our services </a> </li>
+ 
+</ul>
+
+<router-outlet> </router-outlet>
+
+----------------services.comp.html 
+
+<p>services works!</p>
+
+
+<ul> 
+
+    <li > <a routerLink="carrent">  Car Rent </a> </li>
+    <li > <a routerLink="carwash">  Car Wash </a> </li>
+    <li > <a routerLink="dnr">  Denting and Repair </a> </li>
+   
+  </ul>
+  
+
+  <router-outlet> </router-outlet>
