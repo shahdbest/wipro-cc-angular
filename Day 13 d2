@@ -1,0 +1,54 @@
+---------------app-routing.module.ts 
+
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { AddComponent } from './add/add.component';
+import { ViewComponent } from './view/view.component';
+
+const routes: Routes = [
+  {path:'addcar',component:AddComponent},
+  {path:'viewcar',component:ViewComponent},
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+
+
+
+
+
+--------------------app.comp.html 
+
+<!-- 
+<app-add> </app-add>
+
+<app-view> </app-view> -->
+
+<ul> 
+<li> 
+  <a href="addcar"> add car </a>
+</li>
+<li>
+<a href="viewcar"> view cars </a>
+</li>
+</ul>
+
+<p> below is router link </p>
+
+<ul> 
+  <li> 
+    <a routerLink="addcar"> add car RL </a>
+  </li>
+  <li>
+  <a routerLink="viewcar"> view cars RL</a>
+  </li>
+  </ul>
+  
+
+
+
+<router-outlet> </router-outlet>
