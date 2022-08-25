@@ -1,0 +1,85 @@
+ng g c login
+
+----------------------------app-routing.module.ts
+
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { AddComponent } from './add/add.component';
+import { ErrorComponent } from './error/error.component';
+import { LoginComponent } from './login/login.component';
+import { ViewComponent } from './view/view.component';
+
+const routes: Routes = [
+ {path:'',redirectTo:'login',pathMatch:'full'},
+  {path:'addcar',component:AddComponent},
+  {path:'viewcar',component:ViewComponent},
+  {path:'login',component:LoginComponent},
+  {path:'**',component:ErrorComponent},
+  
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+
+
+---------------------------------------------login.html 
+
+
+<p>login works!</p>
+
+
+<label> User Name</label>
+
+<input type="text" [(ngModel)]="userName"> 
+
+<br>
+
+
+<label> password</label>
+
+<input type="text" [(ngModel)]="password">
+
+
+<button (click)="loginValidate()">  login  </button>
+
+
+-------------------------login.ts
+
+
+
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent implements OnInit {
+
+  constructor(private router:Router) { }
+
+  ngOnInit(): void {
+  }
+
+  userName='';
+  password='';
+
+  loginValidate()
+  {
+    if(this.userName=="admin" && this.password=="admin")
+   {
+    alert('valid user');
+    this.router.navigate(['viewcar'])
+   }
+    else
+    {
+    alert('invalid username or password')
+    }
+  }
+
+}
