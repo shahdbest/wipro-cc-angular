@@ -1,0 +1,62 @@
+-------------------------------index.html 
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Demo2</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>
+
+
+
+-------------------------------------------view.html 
+
+
+<p>view works!</p>
+
+
+<table> 
+
+    <tr> 
+
+        <th> Name </th>
+        <th> Model </th>
+        <th> Maker </th>
+        <th> Colour </th>
+        <th> Transmission </th>
+
+    </tr>
+
+
+    
+    <tr *ngFor="let car of cars"> 
+
+        <td> {{car.name}} </td>
+        <td> {{car.model}} </td>
+        <td> {{car.maker}} </td>
+        <td> {{car.colour}} </td>
+        <td> {{car.transmissionType}} </td>
+
+        <td> <button class="btn btn-danger" (click)="deleteCar(car)"> 
+            <i class="glyphicon glyphicon-trash"></i>
+            
+        </button> </td>
+    </tr>
+
+
+</table>
+
