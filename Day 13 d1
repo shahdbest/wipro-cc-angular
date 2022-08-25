@@ -1,0 +1,228 @@
+
+ng new demo2
+
+ng g c add
+ng g c view 
+ng g s car
+
+NOTE: add FormsModule in adpp.module.ts
+
+-----------------model 
+
+export class Car{
+
+
+    name='';
+    model='';
+    maker='';
+    transmissionType='';
+    colour='';
+}
+
+
+------------------------------service 
+
+import { Injectable } from '@angular/core';
+import { Car } from 'src/car.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CarService {
+
+  cars:Car[]=[];
+  constructor() { 
+
+    this.cars=[
+      {name:'swift',model:'lxi',maker:'maruti',colour:'red',transmissionType:'manual'},
+      {name:'baleno',model:'vi',maker:'maruti',colour:'red',transmissionType:'manual'},
+      {name:'swift',model:'zxi',maker:'maruti',colour:'red',transmissionType:'auto'},
+    ];
+  }
+
+
+
+  getCars()
+  {
+    return this.cars;
+  }
+
+
+  addCar(car:Car)
+  {
+    this.cars.push(car);
+  }
+
+}
+
+
+---------------------------view.comp.ts 
+
+import { Component, OnInit } from '@angular/core';
+import { Car } from 'src/car.model';
+import { CarService } from '../car.service';
+
+@Component({
+  selector: 'app-view',
+  templateUrl: './view.component.html',
+  styleUrls: ['./view.component.css']
+})
+export class ViewComponent implements OnInit {
+
+  cars:Car[]=[];
+  constructor(private carService:CarService) { }
+
+  ngOnInit(): void {
+    this.getCar();
+      }
+
+      getCar()
+      {
+        this.cars=this.carService.getCars();
+
+      }
+}
+
+
+---------------------------view.comp.html 
+
+<p>view works!</p>
+
+
+<table> 
+
+    <tr> 
+
+        <th> Name </th>
+        <th> Model </th>
+        <th> Maker </th>
+        <th> Colour </th>
+        <th> Transmission </th>
+
+    </tr>
+
+
+    
+    <tr *ngFor="let car of cars"> 
+
+        <td> {{car.name}} </td>
+        <td> {{car.model}} </td>
+        <td> {{car.maker}} </td>
+        <td> {{car.colour}} </td>
+        <td> {{car.transmissionType}} </td>
+
+    </tr>
+
+
+</table>
+
+------------------------------------------------add.comp.html 
+
+<p>add works!</p>
+
+<table> 
+
+<tr>
+<td>   
+<label> Name </label>
+</td>
+<td >
+<input type="text" [(ngModel)]="car.name">
+</td>
+</tr>
+
+
+
+    <tr>
+    <td>   
+    <label> Model </label>
+    </td>
+    <td >
+    <input type="text" [(ngModel)]="car.model">
+    </td>
+    </tr>
+
+        <tr>
+        <td>   
+        <label> Maker </label>
+        </td>
+        <td >
+        <input type="text" [(ngModel)]="car.maker">
+        </td>
+        </tr>
+        
+
+        <tr>
+            <td>   
+            <label> colour </label>
+            </td>
+            <td >
+            <input type="text" [(ngModel)]="car.colour">
+            </td>
+            </tr>
+            
+            <tr>
+                <td>   
+                <label> Transmission Type </label>
+                </td>
+                <td >
+                <input type="text" [(ngModel)]="car.transmissionType">
+                </td>
+                </tr>
+                
+                    <tr>
+                    <td>   
+                    
+                    </td>
+                    <td >
+                   <button (click)="addCar()"> add car</button>
+                    </td>
+                    </tr>
+                    
+
+</table>
+
+-----------------------add.comp.ts 
+
+
+import { Component, OnInit } from '@angular/core';
+import { Car } from 'src/car.model';
+import { CarService } from '../car.service';
+
+@Component({
+  selector: 'app-add',
+  templateUrl: './add.component.html',
+  styleUrls: ['./add.component.css']
+})
+export class AddComponent implements OnInit {
+
+  constructor(private carService:CarService) { }
+
+  car=new Car();
+  ngOnInit(): void {
+  }
+
+
+  addCar()
+  {
+    let car=new Car();
+    car.name=this.car.name; 
+    car.model=this.car.model;    
+    car.maker=this.car.maker; 
+    car.colour=this.car.colour; 
+    car.transmissionType=this.car.transmissionType; 
+
+    this.carService.addCar(car);
+
+  }
+}
+
+
+-----------------------app.comp.html
+
+
+
+
+<app-add> </app-add>
+
+<app-view> </app-view>
