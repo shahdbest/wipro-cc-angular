@@ -1,0 +1,121 @@
+
+------------view.comp.ts
+
+import { Component, OnInit } from '@angular/core';
+import { Car } from 'src/car.model';
+import { CarService } from '../car.service';
+
+@Component({
+  selector: 'app-view',
+  templateUrl: './view.component.html',
+  styleUrls: ['./view.component.css']
+})
+export class ViewComponent implements OnInit {
+
+  cars:Car[]=[];
+  constructor(private carService:CarService) { }
+
+  ngOnInit(): void {
+    this.getCar();
+      }
+
+      getCar()
+      {
+        this.cars=this.carService.getCars();
+
+      }
+
+      deleteCar(car)
+      {
+      
+        this.carService.deleteCar(car);
+      }
+}
+
+
+-------------view.html 
+
+
+<p>view works!</p>
+
+
+<table> 
+
+    <tr> 
+
+        <th> Name </th>
+        <th> Model </th>
+        <th> Maker </th>
+        <th> Colour </th>
+        <th> Transmission </th>
+
+    </tr>
+
+
+    
+    <tr *ngFor="let car of cars"> 
+
+        <td> {{car.name}} </td>
+        <td> {{car.model}} </td>
+        <td> {{car.maker}} </td>
+        <td> {{car.colour}} </td>
+        <td> {{car.transmissionType}} </td>
+
+        <td> <button (click)="deleteCar(car)"> delete</button> </td>
+    </tr>
+
+
+</table>
+
+------------------------service
+
+
+
+import { Injectable } from '@angular/core';
+import { Car } from 'src/car.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CarService {
+
+  cars:Car[]=[];
+  constructor() { 
+
+    this.cars=[
+      {name:'swift',model:'lxi',maker:'maruti',colour:'red',transmissionType:'manual'},
+      {name:'baleno',model:'vi',maker:'maruti',colour:'red',transmissionType:'manual'},
+      {name:'swift',model:'zxi',maker:'maruti',colour:'red',transmissionType:'auto'},
+    ];
+  }
+
+
+
+deleteCar(car:Car)
+{
+  //console.log('in service');
+ // console.log(car);
+  
+ let idx=this.cars.indexOf(car);
+
+ this.cars.splice(idx,1);
+
+
+}
+
+
+
+
+
+  getCars()
+  {
+    return this.cars;
+  }
+
+
+  addCar(car:Car)
+  {
+    this.cars.push(car);
+  }
+
+}
