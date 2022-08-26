@@ -1,0 +1,140 @@
+
+NOTE : json-server shoube be up and running 
+
+ng g s car
+
+
+------------------model 
+export class Car{
+
+        id= 0;
+        name= "x3";
+        maker= "BMW";
+        colour= "white";
+}
+
+------------------app.module.ts 
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+---------------------------carService.ts
+
+
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Car } from 'src/car.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CarService {
+
+  constructor(private http:HttpClient) { }
+
+
+  getCars()
+  {
+
+    return this.http.get<Car[]>('http://localhost:3000/cars');
+  }
+
+
+}
+
+------------------------app.comp.html 
+
+
+<table width="80%" border="2px">
+
+
+  <tr> 
+<td> Id </td>
+<td> Name </td>
+<td> Maker </td>
+<td> Colour </td>
+
+  </tr>
+
+
+
+  <tr *ngFor="let car of cars"> 
+    <td> {{car.id}} </td>
+    <td> {{car.name}} </td>
+    <td> {{car.maker}} </td>
+    <td> {{car.colour}} </td>
+    
+      </tr>
+
+</table> 
+
+----------------app.comp.ts
+
+
+import { Component } from '@angular/core';
+import { Car } from 'src/car.model';
+import { CarService } from './car.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'httpdemo';
+
+  cars:Car[]=[];
+  constructor(private carService:CarService)
+  {
+
+  }
+
+ngOnInit(): void {
+  //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+  //Add 'implements OnInit' to the class.
+ 
+  this.getCars();
+}
+
+
+getCars()
+{
+
+  this.carService.getCars().subscribe(
+    data=>{
+
+      this.cars=data;
+    },
+    error=>{
+      console.log(error)
+    }
+  )
+
+
+}
+
+
+
+}
+
