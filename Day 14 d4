@@ -1,0 +1,51 @@
+get  --> get data 
+post -> save data / secure / requestBody
+put -> update data
+delete -> delete data
+
+
+
+npm install -g json-server
+
+ng new httpdemo
+
+open project in vs code 
+
+new terminal 
+
+json-server --watch db.json
+
+--db.json
+
+{
+"cars":[]  
+}
+
+
+open postman
+
+get method
+http://localhost:3000/cars
+
+-------------
+
+post 
+
+body
+-> raw
+->  change text to json
+
+---->body
+{
+
+    "id":2,
+    "name":"liva",
+    "maker":"toyota",
+    "colour":"black"
+
+}
+
+
+---------> hit get method again to see the data 
+
+
