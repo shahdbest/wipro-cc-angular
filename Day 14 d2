@@ -1,0 +1,151 @@
+-------------------login.ts
+
+import { Component, OnInit } from '@angular/core';
+import { Route, Router } from '@angular/router';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent implements OnInit {
+
+  constructor(private router:Router) { }
+
+  ngOnInit(): void {
+  }
+
+  userName='';
+  password='';
+
+  validateLogin(){
+
+    if(this.userName=='admin' && this.password=='admin123')
+    {
+      alert('admin logged in')
+      this.router.navigate(['main',this.userName,this.password])
+    }
+    else if(this.userName=='user' && this.password=='user123')
+    {
+      alert('user logged in')
+      this.router.navigate(['main',this.userName,this.password])
+    }
+    else
+    {
+      alert('invalid login')
+    }
+  }
+
+}
+
+---------------------------------------------------------app-routing.module.ts
+
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { AboutComponent } from './about/about.component';
+import { ContactComponent } from './contact/contact.component';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { MaincompComponent } from './maincomp/maincomp.component';
+import { CarrestComponent } from './services/carrest/carrest.component';
+import { CarwashComponent } from './services/carwash/carwash.component';
+import { DentingandrepairComponent } from './services/dentingandrepair/dentingandrepair.component';
+import { FlooringComponent } from './services/flooring/flooring.component';
+import { ServicesComponent } from './services/services.component';
+
+const routes: Routes = [
+  {path:'',redirectTo:'login',pathMatch:'full'},
+  {path:'home',component:HomeComponent},
+  {path:'about',component:AboutComponent},
+  {path:'contact',component:ContactComponent},
+  {path:'services',component:ServicesComponent,
+  children:[
+  {path:'carwash',component:CarwashComponent},
+  {path:'carrent',component:CarrestComponent},
+  {path:'dnr',component:DentingandrepairComponent},
+  {path:'flooring',component:FlooringComponent}
+   
+  ]
+  },
+  {path:'login',component:LoginComponent},
+  {path:'main/:userId/:pass',component:MaincompComponent}
+
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+
+------------------------------main.comp.html 
+
+<p>maincomp works!</p>
+
+
+welcome {{userName}} with password {{password}}
+<ul> 
+
+    <li > <a routerLink="/home">  home </a> </li>
+    <li > <a routerLink="/about">  about </a> </li>
+    <li > <a routerLink="/contact">  contact us </a> </li>
+    <li > <a routerLink="/services"> our services </a> </li>
+   
+  </ul>
+  
+  
+  ------------------------main.comp.ts
+  
+  import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+@Component({
+  selector: 'app-maincomp',
+  templateUrl: './maincomp.component.html',
+  styleUrls: ['./maincomp.component.css']
+})
+export class MaincompComponent implements OnInit {
+
+  constructor(private actv:ActivatedRoute) { }
+
+  ngOnInit(): void {
+    this.readPathVar();
+  }
+
+  userName='';
+  password='';
+
+  readPathVar()
+  {
+
+
+    this.actv.params.subscribe(
+
+     data =>{
+    this.userName=  data['userId'];
+     this.password=data['pass']; 
+  }
+
+    );
+
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
