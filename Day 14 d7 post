@@ -1,0 +1,134 @@
+---------------------service
+
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Car } from 'src/car.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CarService {
+
+  constructor(private http:HttpClient) { }
+
+
+  getCars()
+  {
+
+    return this.http.get<Car[]>('http://localhost:3000/cars');
+  }
+
+  
+  addCar(car:Car)
+  {
+
+    return this.http.post<Car>('http://localhost:3000/cars',car);
+  }
+
+}
+
+
+
+-----------------app.html 
+
+
+
+<table width="80%" border="2px">
+
+
+  <tr> 
+<td> Id </td>
+<td> Name </td>
+<td> Maker </td>
+<td> Colour </td>
+
+  </tr>
+
+
+
+  <tr *ngFor="let car of cars"> 
+    <td> {{car.id}} </td>
+    <td> {{car.name}} </td>
+    <td> {{car.maker}} </td>
+    <td> {{car.colour}} </td>
+    
+      </tr>
+
+</table> 
+
+<P> add car </P>
+
+<input type="text" [(ngModel)]="car.id" placeholder="id">
+<input type="text" [(ngModel)]="car.name" placeholder="name">
+<input type="text" [(ngModel)]="car.maker" placeholder="maker">
+<input type="text" [(ngModel)]="car.colour" placeholder="colour">
+
+<button (click)="addCar()"> add car </button>
+
+
+---------------app.comp.ts
+
+import { Component } from '@angular/core';
+import { Car } from 'src/car.model';
+import { CarService } from './car.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'httpdemo';
+
+  cars:Car[]=[];
+  constructor(private carService:CarService)
+  {
+
+  }
+
+ngOnInit(): void {
+  //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+  //Add 'implements OnInit' to the class.
+ 
+  this.getCars();
+}
+
+
+getCars()
+{
+
+  this.carService.getCars().subscribe(
+    data=>{
+
+      this.cars=data;
+    },
+    error=>{
+      console.log(error)
+    }
+  )
+
+
+}
+
+
+car=new Car();
+
+addCar()
+{
+
+this.carService.addCar(this.car).subscribe(
+  data=>{
+
+    alert('car added');
+    this.getCars();
+  },
+  error=>{
+    console.log(error);
+  }
+)  
+}
+
+
+}
+
+
