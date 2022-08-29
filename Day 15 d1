@@ -1,0 +1,236 @@
+-- ng new httpdemo2
+-- ng serve
+-- json-server --watch db.json 
+
+{
+  "books": [
+  ]
+}
+
+ng g s books
+
+------------------------------------------model 
+
+export class Book
+{
+
+    id=0;
+    isbn='';
+    title='';
+    author='';
+    publication='';
+    rating=0;
+
+}
+
+
+--------------------------------------------books.service.ts 
+
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Book } from 'src/Book.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class BooksService {
+
+  constructor(private http:HttpClient) { }
+
+  getBooks()
+  {
+
+    return this.http.get<Book[]>('http://localhost:3000/books');
+  }
+
+
+  addBook(book:Book)
+  {
+
+    return this.http.post<Book>('http://localhost:3000/books',book);
+  }
+
+
+
+  deleteBook(id:number)
+  {
+
+    return this.http.delete(`http://localhost:3000/books/${id}`);
+  }
+
+
+}
+
+
+
+-----------------------------app.comp.html 
+
+
+
+<table border="2px" width="70%">
+
+  <tr>
+<td>id </td> 
+<td>isbn</td> 
+<td>title </td> 
+<td>author</td> 
+<td>rating </td> 
+<td>publication </td> 
+
+
+  </tr> 
+
+  <tr *ngFor="let book of books">
+    <td>{{book.id}} </td> 
+    <td>{{book.isbn}}</td> 
+    <td>{{book.title}}</td> 
+    <td>{{book.author}}</td> 
+    <td>{{book.rating}} </td> 
+    <td>{{book.publication}} </td> 
+    <td> <button (click)="deleteBook(book.id)"> delete </button> </td> 
+    
+    
+      </tr> 
+
+
+
+</table> 
+
+
+<br>
+
+<br>
+<br>
+
+<!-- add -->
+
+id: 
+<input type="text" [(ngModel)]="book.id" > 
+
+<input type="text" [(ngModel)]="book.title" placeholder="title"> 
+
+<input type="text" [(ngModel)]="book.isbn" placeholder="isbn"> 
+
+rating:
+<input type="text" [(ngModel)]="book.rating" placeholder="rating"> 
+
+<input type="text" [(ngModel)]="book.publication" placeholder="publication"> 
+
+<input type="text" [(ngModel)]="book.author" placeholder="author"> 
+
+<button (click)="addBook()"> add book </button>
+
+
+
+------------app.comp.ts
+
+
+import { Component } from '@angular/core';
+import { Book } from 'src/Book.model';
+import { BooksService } from './books.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'httpdemo2';
+
+constructor(private bookService:BooksService){
+
+}
+
+
+ngOnInit(): void {
+  //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+  //Add 'implements OnInit' to the class.
+  
+  this.getBooks();
+}
+
+books:Book[]=[];
+getBooks()
+{
+
+  this.bookService.getBooks().subscribe(
+    data=>{
+      this.books=data;
+    },
+    error=>{
+console.log(error);
+    }
+  )
+}
+
+//---------
+
+book=new Book();
+
+addBook()
+{
+
+  this.bookService.addBook(this.book).subscribe(
+
+    data=>{
+      alert('book added')
+      this.getBooks();
+    },
+    error=>{
+      console.log(error)
+    }
+  )
+}
+
+
+
+deleteBook(id:number)
+{
+
+  this.bookService.deleteBook(id).subscribe(
+
+    data=>{
+      alert('data deleted for book id '+id);
+      this.getBooks();
+    },
+    error=>{
+      console.log(error)
+    }
+
+  )
+
+}
+
+}
+
+
+--------------------------------app.module.ts
+
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { HttpClientModule} from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+
+
+
