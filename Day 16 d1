@@ -1,0 +1,152 @@
+
+
+register for https://newsapi.org/
+get the api key 
+-------------------------service
+
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Book } from 'src/Book.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class BooksService {
+
+  constructor(private http:HttpClient) { }
+
+
+  getNewsHeadlines()
+  {
+
+    return this.http.get('https://newsapi.org/v2/top-headlines?country=in&apiKey=YOUR_API_KEY');
+  }
+
+
+
+}
+
+
+------------------------------ts 
+import { Component } from '@angular/core';
+import { Book } from 'src/Book.model';
+import { BooksService } from './books.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'httpdemo2';
+
+constructor(private bookService:BooksService){
+
+}
+
+ngOnInit(): void {
+  //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+  //Add 'implements OnInit' to the class.
+  this.getNews();
+}
+
+mytitle='';
+desc='';
+url='';
+urlToImage='';
+author='';
+
+
+abc:string='';
+getNews()
+{
+this.bookService.getNewsHeadlines().subscribe(
+
+  data=>{
+  
+   // console.log(data);
+  
+   // console.log(data.articles); //error articles is not knowm property
+  
+    let myJson= JSON.parse(JSON.stringify(data));
+
+    //console.log(myJson);
+
+    console.log(myJson.articles);
+
+ //   console.log(myJson.articles[0].author);
+   // console.log(myJson.articles[0].description);
+    //console.log(myJson.articles[0].title);
+    //console.log(myJson.articles[0].url);
+    //console.log(myJson.articles[0].urlToImage);
+    
+
+    this.mytitle=myJson.articles[0].title;
+
+    this.desc=myJson.articles[0].description;
+
+    this.author=myJson.articles[0].author;
+
+    this.url=myJson.articles[0].url;
+
+    this.urlToImage=myJson.articles[0].urlToImage;
+    
+    
+    
+    
+    
+
+
+  },
+  error=>{
+    console.log(error);
+  }
+)
+
+}
+
+
+
+}
+
+---------------------html 
+
+
+
+news API
+
+<h1> 
+{{mytitle}}
+</h1>
+
+<img [src]="urlToImage" width="200px"> 
+<br>
+written by:
+{{author}}
+
+<p> {{desc}} <a target="_blank" [href]="url">  read more </a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
