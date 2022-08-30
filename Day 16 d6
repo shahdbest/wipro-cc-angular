@@ -1,0 +1,174 @@
+ng g c trendinggif
+
+
+
+---------------app.html 
+
+
+NEWS API
+
+
+<ul> 
+
+  <li> <a routerLink="headlines"> headlines  </a>  </li>
+  <li> <a routerLink="sports"> sports headlines  </a>  </li>
+  <li> <a routerLink="health"> health headlines  </a>  </li>
+  <li> <a routerLink="search"> search  news </a>  </li>
+  <li> <a routerLink="trendinggif"> Trending Gif </a>  </li>
+
+</ul>
+
+
+<router-outlet> </router-outlet>
+
+
+-------------------app-routing.module.ts 
+
+
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { HeadlinesComponent } from './headlines/headlines.component';
+import { HealthComponent } from './health/health.component';
+import { SearchComponent } from './search/search.component';
+import { SportsComponent } from './sports/sports.component';
+import { TrendinggifComponent } from './trendinggif/trendinggif.component';
+
+const routes: Routes = [
+  {path:'',redirectTo:'headlines',pathMatch:'full'},
+{path:'sports',component:SportsComponent},
+{path:'headlines',component:HeadlinesComponent},
+{path:'health',component:HealthComponent},
+{path:'search',component:SearchComponent},
+{path:'trendinggif',component:TrendinggifComponent}
+
+
+
+
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+
+
+-------------service
+
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Book } from 'src/Book.model';
+import { GifImages } from 'src/gifs.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class BooksService {
+
+  constructor(private http:HttpClient) { }
+
+
+  getNewsHeadlines()
+  {
+
+    return this.http.get('https://newsapi.org/v2/top-headlines?country=in&apiKey=87229b519983412ba54b0c374de74182');
+  }
+
+
+  getSportsHeadlines()
+  {
+
+    return this.http.get('https://newsapi.org/v2/top-headlines?country=in&category=sports&apiKey=87229b519983412ba54b0c374de74182');
+  }
+
+
+  getHealthHeadlines()
+  {
+
+    return this.http.get('https://newsapi.org/v2/top-headlines?country=in&category=health&apiKey=87229b519983412ba54b0c374de74182');
+  }
+
+
+
+
+  
+  searchNews(query:string)
+  {
+
+    return this.http.get('https://newsapi.org/v2/everything?q='+query+'&apiKey=87229b519983412ba54b0c374de74182');
+  }
+
+
+  trendingGif()
+  {
+
+    return this.http.get('https://api.giphy.com/v1/gifs/trending?api_key=3SZ34Ukz3s1DYZhrHnhHInO5VUWSn2Gb');
+  }
+
+}
+
+--------------------------------trending.ts
+
+import { Component, OnInit } from '@angular/core';
+import { GifImages } from 'src/gifs.model';
+import { BooksService } from '../books.service';
+
+@Component({
+  selector: 'app-trendinggif',
+  templateUrl: './trendinggif.component.html',
+  styleUrls: ['./trendinggif.component.css']
+})
+export class TrendinggifComponent implements OnInit {
+
+  constructor(private bookService:BooksService) { }
+
+  ngOnInit(): void {
+    this.getTrending();
+  }
+
+  gifs:string[]=[];
+getTrending()
+{
+
+
+  this.bookService.trendingGif().subscribe(
+    data=>{
+
+let myJson=JSON.parse(JSON.stringify( data));
+
+for(let i=0;i<myJson.data.length;i++)
+{
+
+this.gifs[i]=myJson.data[i].images.downsized.url;
+} 
+},
+    error=>{
+      console.log(error)
+    }
+  )
+
+}
+
+}
+
+---------------------trending.html 
+
+
+<p>trendinggif works!</p>
+
+
+<div *ngFor="let gif of gifs">
+
+    <img [src]="gif" height="200px"> 
+
+</div> 
+
+
+
+
+
+
+
+
+
