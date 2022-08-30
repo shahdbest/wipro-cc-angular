@@ -1,0 +1,53 @@
+
+
+--------------------service 
+
+  caloriesAPi()
+  {
+
+    let headers=new HttpHeaders().set('x-api-key','YOUR_API_KEY_HERE');
+
+    return this.http.get('  https://api.calorieninjas.com/v1/nutrition?query=1 egg',{headers});
+  }
+
+
+--------------app.comp.ts
+
+import { Component } from '@angular/core';
+import { Article } from 'src/artice.model';
+import { Book } from 'src/Book.model';
+import { BooksService } from './books.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'httpdemo2';
+
+
+  constructor(private bookService:BooksService)
+  {
+
+  }
+
+
+  ngOnInit(): void {
+    
+    this.bookService.caloriesAPi().subscribe(
+
+      data=>{
+        console.log(data)
+      },
+
+      error=>{
+        console.log(error)
+      }
+    )
+  }
+
+}
+
+
+
