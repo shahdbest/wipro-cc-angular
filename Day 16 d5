@@ -1,0 +1,240 @@
+---ng g c search
+
+
+------------------service
+
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Book } from 'src/Book.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class BooksService {
+
+  constructor(private http:HttpClient) { }
+
+
+  getNewsHeadlines()
+  {
+
+    return this.http.get('https://newsapi.org/v2/top-headlines?country=in&apiKey=87229b519983412ba54b0c374de74182');
+  }
+
+
+  getSportsHeadlines()
+  {
+
+    return this.http.get('https://newsapi.org/v2/top-headlines?country=in&category=sports&apiKey=87229b519983412ba54b0c374de74182');
+  }
+
+
+  getHealthHeadlines()
+  {
+
+    return this.http.get('https://newsapi.org/v2/top-headlines?country=in&category=health&apiKey=87229b519983412ba54b0c374de74182');
+  }
+
+
+
+
+  
+  searchNews(query:string)
+  {
+
+    return this.http.get('https://newsapi.org/v2/everything?q='+query+'&apiKey=87229b519983412ba54b0c374de74182');
+  }
+
+  
+
+
+
+  
+
+}
+
+------------------------------------------app-routing.module.ts
+
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { HeadlinesComponent } from './headlines/headlines.component';
+import { HealthComponent } from './health/health.component';
+import { SearchComponent } from './search/search.component';
+import { SportsComponent } from './sports/sports.component';
+
+const routes: Routes = [
+  {path:'',redirectTo:'headlines',pathMatch:'full'},
+{path:'sports',component:SportsComponent},
+{path:'headlines',component:HeadlinesComponent},
+{path:'health',component:HealthComponent},
+{path:'search',component:SearchComponent}
+
+
+
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+
+--------------------------app.comp.html 
+
+
+NEWS API
+
+
+<ul> 
+
+  <li> <a routerLink="headlines"> headlines  </a>  </li>
+  <li> <a routerLink="sports"> sports headlines  </a>  </li>
+  <li> <a routerLink="health"> health headlines  </a>  </li>
+  <li> <a routerLink="search"> search  news </a>  </li>
+
+</ul>
+
+
+<router-outlet> </router-outlet>
+
+
+
+--------------------------------------------search.html 
+
+<p>search works!</p>
+
+
+<input type="text" [(ngModel)]="search"> 
+
+<button (click)="searchNews()"> search news</button>
+
+
+
+<div *ngFor="let article of articles"> 
+    <h1> 
+    {{article.title}}
+    </h1>
+    
+    <img [src]="article.urlToImage" width="200px"> 
+    <br>
+    written by:
+    {{article.author}}
+    
+    <p> {{article.description}} <a target="_blank" [href]="article.url">  read more </a></p>
+    
+    
+    
+    </div>
+    
+    
+    
+    ----------------search.ts 
+    
+    import { Component, OnInit } from '@angular/core';
+import { Article } from 'src/artice.model';
+import { BooksService } from '../books.service';
+
+@Component({
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.css']
+})
+export class SearchComponent implements OnInit {
+
+  
+  constructor(private bookService:BooksService){
+
+  }
+  
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+   }
+  
+  
+   articles:Article[]=[];
+  
+  search='';
+   searchNews()
+  {
+
+    this.bookService.searchNews(this.search).subscribe(
+  
+      data=>{
+    
+        let myJson= JSON.parse(JSON.stringify(data));
+        this.articles=myJson.articles;
+      },
+      error=>{
+        console.log(error);
+      }
+    )
+    
+    
+   }
+  
+  }
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
