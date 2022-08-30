@@ -1,0 +1,131 @@
+---------ng g c searchgif
+
+-----------------app.comp.html 
+
+
+
+NEWS API
+
+
+<ul> 
+
+  <li> <a routerLink="headlines"> headlines  </a>  </li>
+  <li> <a routerLink="sports"> sports headlines  </a>  </li>
+  <li> <a routerLink="health"> health headlines  </a>  </li>
+  <li> <a routerLink="search"> search  news </a>  </li>
+  <li> <a routerLink="trendinggif"> Trending Gif </a>  </li>
+  <li> <a routerLink="searchgif"> search Gif </a>  </li>
+
+</ul>
+
+
+<router-outlet> </router-outlet>
+
+
+--------------------app-routing.ts 
+
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { HeadlinesComponent } from './headlines/headlines.component';
+import { HealthComponent } from './health/health.component';
+import { SearchComponent } from './search/search.component';
+import { SearchgifComponent } from './searchgif/searchgif.component';
+import { SportsComponent } from './sports/sports.component';
+import { TrendinggifComponent } from './trendinggif/trendinggif.component';
+
+const routes: Routes = [
+  {path:'',redirectTo:'headlines',pathMatch:'full'},
+{path:'sports',component:SportsComponent},
+{path:'headlines',component:HeadlinesComponent},
+{path:'health',component:HealthComponent},
+{path:'search',component:SearchComponent},
+{path:'trendinggif',component:TrendinggifComponent},
+{path:'searchgif',component:SearchgifComponent}
+
+
+
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+
+
+------------------searchgif.ts 
+
+
+
+import { Component, OnInit } from '@angular/core';
+import { BooksService } from '../books.service';
+
+@Component({
+  selector: 'app-searchgif',
+  templateUrl: './searchgif.component.html',
+  styleUrls: ['./searchgif.component.css']
+})
+export class SearchgifComponent implements OnInit {
+
+  constructor(private bookService:BooksService) { }
+
+  ngOnInit(): void {
+  //  this.getSearchGif()
+  }
+
+  search='';
+  gifs:string[]=[];
+getSearchGif()
+{
+
+
+  this.bookService.SearchgGif(this.search).subscribe(
+    data=>{
+
+let myJson=JSON.parse(JSON.stringify( data));
+
+for(let i=0;i<myJson.data.length;i++)
+{
+
+this.gifs[i]=myJson.data[i].images.downsized.url;
+} 
+},
+    error=>{
+      console.log(error)
+    }
+  )
+
+}
+
+}
+
+
+-----------------searchgif.html 
+
+<p>searchgif works!</p>
+
+
+
+<input type="text" [(ngModel)]="search"> 
+<button (click)="getSearchGif()"> search gif </button>
+
+
+
+<div *ngFor="let gif of gifs">
+
+    <img [src]="gif" height="200px"> 
+
+</div> 
+
+
+
+
+
+
+
+
+
+
+
+
