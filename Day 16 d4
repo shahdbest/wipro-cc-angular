@@ -1,0 +1,303 @@
+ng g c sports
+ng g c health
+ng g c headlines
+
+
+---------------app.comp.html 
+
+
+
+NEWS API
+
+
+<ul> 
+
+  <li> <a routerLink="headlines"> headlines  </a>  </li>
+  <li> <a routerLink="sports"> sports headlines  </a>  </li>
+  <li> <a routerLink="health"> health headlines  </a>  </li>
+
+</ul>
+
+
+<router-outlet> </router-outlet>
+
+
+--------------------app-routing.ts 
+
+
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { HeadlinesComponent } from './headlines/headlines.component';
+import { HealthComponent } from './health/health.component';
+import { SportsComponent } from './sports/sports.component';
+
+const routes: Routes = [
+  {path:'',redirectTo:'headlines',pathMatch:'full'},
+{path:'sports',component:SportsComponent},
+{path:'headlines',component:HeadlinesComponent},
+{path:'health',component:HealthComponent}
+
+
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+
+
+
+
+---------------service
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Book } from 'src/Book.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class BooksService {
+
+  constructor(private http:HttpClient) { }
+
+
+  getNewsHeadlines()
+  {
+
+    return this.http.get('https://newsapi.org/v2/top-headlines?country=in&apiKey=87229b519983412ba54b0c374de74182');
+  }
+
+
+  getSportsHeadlines()
+  {
+
+    return this.http.get('https://newsapi.org/v2/top-headlines?country=in&category=sports&apiKey=87229b519983412ba54b0c374de74182');
+  }
+
+
+  getHealthHeadlines()
+  {
+
+    return this.http.get('https://newsapi.org/v2/top-headlines?country=in&category=health&apiKey=87229b519983412ba54b0c374de74182');
+  }
+
+
+
+
+  
+
+}
+
+
+----------------------------headlines.html
+<p>headlines works!</p>
+
+
+<div *ngFor="let article of articles"> 
+    <h1> 
+    {{article.title}}
+    </h1>
+    
+    <img [src]="article.urlToImage" width="200px"> 
+    <br>
+    written by:
+    {{article.author}}
+    
+    <p> {{article.description}} <a target="_blank" [href]="article.url">  read more </a></p>
+    
+    
+    
+    </div>
+----------------------------headlines.ts
+import { Component, OnInit } from '@angular/core';
+import { Article } from 'src/artice.model';
+import { BooksService } from '../books.service';
+
+@Component({
+  selector: 'app-headlines',
+  templateUrl: './headlines.component.html',
+  styleUrls: ['./headlines.component.css']
+})
+export class HeadlinesComponent implements OnInit {
+
+  constructor(private bookService:BooksService){
+
+  }
+  
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.getNews();
+  }
+  
+  
+   articles:Article[]=[];
+  
+  abc:string='';
+  getNews()
+  {
+  this.bookService.getNewsHeadlines().subscribe(
+  
+    data=>{
+  
+      let myJson= JSON.parse(JSON.stringify(data));
+      this.articles=myJson.articles;
+    },
+    error=>{
+      console.log(error);
+    }
+  )
+  
+  }
+  
+  
+}
+
+
+----------------------------sports.html 
+
+
+
+<div *ngFor="let article of articles"> 
+    <h1> 
+    {{article.title}}
+    </h1>
+    
+    <img [src]="article.urlToImage" width="200px"> 
+    <br>
+    written by:
+    {{article.author}}
+    
+    <p> {{article.description}} <a target="_blank" [href]="article.url">  read more </a></p>
+    
+    
+    
+    </div>
+----------------------------sports.ts
+import { Component, OnInit } from '@angular/core';
+import { Article } from 'src/artice.model';
+import { BooksService } from '../books.service';
+
+@Component({
+  selector: 'app-sports',
+  templateUrl: './sports.component.html',
+  styleUrls: ['./sports.component.css']
+})
+export class SportsComponent implements OnInit {
+
+  constructor(private bookService:BooksService){
+
+  }
+  
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.getNews();
+  }
+  
+  
+   articles:Article[]=[];
+  
+  abc:string='';
+  getNews()
+  {
+  this.bookService.getSportsHeadlines().subscribe(
+  
+    data=>{
+  
+      let myJson= JSON.parse(JSON.stringify(data));
+      this.articles=myJson.articles;
+    },
+    error=>{
+      console.log(error);
+    }
+  )
+  
+  }
+  
+
+}
+
+
+----------------------------health.html 
+
+<p>health works!</p>
+
+
+
+<div *ngFor="let article of articles"> 
+    <h1> 
+    {{article.title}}
+    </h1>
+    
+    <img [src]="article.urlToImage" width="200px"> 
+    <br>
+    written by:
+    {{article.author}}
+    
+    <p> {{article.description}} <a target="_blank" [href]="article.url">  read more </a></p>
+    
+    
+    
+    </div>
+----------------------------health.ts 
+
+import { Component, OnInit } from '@angular/core';
+import { Article } from 'src/artice.model';
+import { BooksService } from '../books.service';
+
+@Component({
+  selector: 'app-health',
+  templateUrl: './health.component.html',
+  styleUrls: ['./health.component.css']
+})
+export class HealthComponent implements OnInit {
+
+  constructor(private bookService:BooksService){
+
+  }
+  
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.getNews();
+  }
+  
+  
+   articles:Article[]=[];
+  
+  abc:string='';
+  getNews()
+  {
+  this.bookService.getHealthHeadlines().subscribe(
+  
+    data=>{
+  
+      let myJson= JSON.parse(JSON.stringify(data));
+      this.articles=myJson.articles;
+    },
+    error=>{
+      console.log(error);
+    }
+  )
+  
+  }
+  
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
