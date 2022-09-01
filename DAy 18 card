@@ -1,0 +1,13 @@
+
+
+  <div class="row card-group">
+    <div class="col-4"  *ngFor="let article of articles">
+     
+      <div class="card">
+ 
+        <img [src]="article.urlToImage" class="card-img-top" alt="...">
+
+        
+      </div>
+      
+</div>
