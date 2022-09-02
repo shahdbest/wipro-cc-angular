@@ -1,0 +1,132 @@
+import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { Article } from 'src/artice.model';
+import { Book } from 'src/Book.model';
+import { BooksService } from './books.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'httpdemo2';
+
+
+  constructor(private bookService:BooksService){
+
+  }
+  
+  ngOnInit(): void {
+  }
+
+
+  book=new Book();
+  
+  addBook()
+  {
+
+this.bookService.addBook(this.book).subscribe(
+
+  data=>{
+
+    alert('book added')
+  },
+  error=>{
+    console.log(error)
+  }
+)
+
+  }
+
+
+
+  userName=new FormControl();
+
+  onMyFormSubmit()
+  {
+   
+    console.log('valid '+this.userName.valid);
+    console.log('touched '+this.userName.touched);
+  
+    console.log(this.userName)
+
+    if(this.userName.errors!=null)
+    {
+        if(this.userName.errors.required)
+        {
+          alert('name cannot be left blank')
+        }
+
+        
+        if(this.userName.errors.minlength)
+        {
+          alert('user name should be of 3 or more chars')
+        }
+        // if(this.userName.errors[required])
+        
+    }
+
+  }
+
+
+
+}
+
+-------------------------------------ts 
+
+
+<!-- 
+
+<label> 
+    id
+</label>
+
+<input type="text" [(ngModel)]="book.id"> 
+
+<br>
+
+<label> 
+    isbn
+</label>
+<input type="text" [(ngModel)]="book.isbn" required=""> 
+<br>
+<label> 
+   title
+</label>
+<input type="text" [(ngModel)]="book.title"> 
+<br>
+
+<label> 
+    author
+</label>
+
+<input type="text" [(ngModel)]="book.author"> 
+
+<br>
+
+<label> 
+    rating
+</label>
+
+<input type="text" [(ngModel)]="book.rating"> 
+
+<br>
+
+<label> 
+    publication
+</label>
+
+<input type="text" [(ngModel)]="book.publication"> 
+
+<br>
+<button (click)="addBook()"> add book </button> -->
+
+
+
+<form (ngSubmit)="onMyFormSubmit()"> 
+<input type="text" [formControl]="userName" required="" minlength="3">
+
+<input type="submit"> 
+</form>
+
