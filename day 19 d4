@@ -1,0 +1,80 @@
+
+<form (ngSubmit)="onMyFormSubmit()"> 
+<input type="text" [formControl]="userName" required="">
+
+<input type="submit"> 
+</form>
+
+
+----------------ts 
+
+import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { Article } from 'src/artice.model';
+import { Book } from 'src/Book.model';
+import { BooksService } from './books.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'httpdemo2';
+
+
+  constructor(private bookService:BooksService){
+
+  }
+  
+  ngOnInit(): void {
+  }
+
+
+  book=new Book();
+  
+  addBook()
+  {
+
+this.bookService.addBook(this.book).subscribe(
+
+  data=>{
+
+    alert('book added')
+  },
+  error=>{
+    console.log(error)
+  }
+)
+
+  }
+
+
+
+  userName=new FormControl();
+
+  onMyFormSubmit()
+  {
+   
+    console.log('valid '+this.userName.valid);
+    console.log('touched '+this.userName.touched);
+  
+    console.log(this.userName)
+
+    if(this.userName.errors!=null)
+    {
+        if(this.userName.errors.required)
+        {
+          alert('name cannot be left blank')
+        }
+        // if(this.userName.errors[required])
+        
+    }
+
+  }
+
+
+
+}
+
+
