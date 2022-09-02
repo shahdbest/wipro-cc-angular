@@ -1,0 +1,177 @@
+
+<form [formGroup]="addForm" (ngSubmit)="addBook()"> 
+<label> 
+    id
+</label>
+
+<input type="text"  formControlName="id" [(ngModel)]="book.id"> 
+
+<br>
+
+<label> 
+    isbn
+</label>
+<input type="text" formControlName="isbn" [(ngModel)]="book.isbn" required=""> 
+<br>
+<label> 
+   title
+</label>
+<input type="text" formControlName="title" [(ngModel)]="book.title"> 
+<br>
+
+<label> 
+    author
+</label>
+
+<input type="text" formControlName="author" [(ngModel)]="book.author"> 
+
+<br>
+
+<label> 
+    rating
+</label>
+
+<input type="text" formControlName="rating" [(ngModel)]="book.rating"> 
+
+<br>
+
+<label> 
+    publication
+</label>
+
+<input type="text" formControlName="publication" [(ngModel)]="book.publication"> 
+
+<br>
+<button type="submit"> add book </button>
+</form>
+
+
+---------------------------------------app.comp.ts
+
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Article } from 'src/artice.model';
+import { Book } from 'src/Book.model';
+import { myValidator } from 'src/mycustom.validato';
+import { BooksService } from './books.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'httpdemo2';
+
+
+  constructor(private bookService:BooksService){
+this.myFormValidation();
+  }
+  
+  ngOnInit(): void {
+  }
+
+
+  myFormValidation()
+  {
+//    this.userName.setValidators([Validators.required])
+  
+//this.userName.setValidators([Validators.required,Validators.minLength(3)])
+  
+//this.addForm.controls['title'].setValidators([Validators.minLength(5)])
+this.addForm.controls['title'].setValidators([myValidator()])
+}
+
+
+
+  book=new Book();
+  
+  addBook()
+  {
+
+    if(this.addForm.valid)
+    {
+
+this.bookService.addBook(this.book).subscribe(
+
+  data=>{
+
+    alert('book added')
+  },
+  error=>{
+    console.log(error)
+  }
+)
+    }
+    else
+    {
+      if(this.addForm.controls['title'].errors!=null)
+      {
+       
+        console.log(this.addForm.controls['title'].errors);
+
+        if(this.addForm.controls['title'].errors.minlength)
+          alert('title must be of 5 or more chars')
+
+        }
+    
+        else
+        {
+          alert('isbn cannot be blank')
+        }
+
+    }
+
+  }
+
+
+  addForm=new FormGroup({
+    id:new FormControl(),
+    isbn:new FormControl(),
+    title:new FormControl(),
+    author:new FormControl(),
+    rating:new FormControl(),
+    publication:new FormControl(),
+    
+
+  })
+
+
+
+
+}
+
+---------------------------------------------------myvalidator.validator.ts
+
+
+import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
+
+export function myValidator():ValidatorFn
+{
+
+    return (ctrl:AbstractControl):ValidationErrors|null=>{
+
+        if(ctrl.value=='hell')
+        return {txtError:'hell is not acceptable'}
+
+        else
+        return null;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
