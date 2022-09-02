@@ -1,0 +1,14 @@
+--> create a custom validator which should not accept the following cities
+    mumbai , pune , bijapur , bangalore , hubli ,gulbarga
+    
+    
+    
+--> create a custom validator which check the min length of a given text has to be 5 
+NOTE: do not use builtin min length validator 
+
+
+-> create a custom validator which check if the given value is an even number if yes accept else validation fail
+
+
+
+    
