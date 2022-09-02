@@ -1,0 +1,51 @@
+
+
+
+<form (ngSubmit)="onMyFormSubmit()"> 
+<input type="text" [formControl]="userName">
+
+<input type="submit"> 
+</form>
+
+
+
+--------------------------ts
+
+
+import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { Article } from 'src/artice.model';
+import { Book } from 'src/Book.model';
+import { BooksService } from './books.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'httpdemo2';
+
+
+  userName=new FormControl();
+
+  onMyFormSubmit()
+  {
+   
+    console.log('value '+this.userName.value);
+    console.log('valid '+this.userName.valid);
+    console.log('touched '+this.userName.touched);
+    console.log('dirty '+this.userName.dirty);
+    console.log('pristine '+this.userName.pristine);
+
+  }
+
+
+
+}
+
+
+
+
+
+
