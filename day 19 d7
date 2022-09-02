@@ -1,0 +1,163 @@
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Article } from 'src/artice.model';
+import { Book } from 'src/Book.model';
+import { BooksService } from './books.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'httpdemo2';
+
+
+  constructor(private bookService:BooksService){
+this.myFormValidation();
+  }
+  
+  ngOnInit(): void {
+  }
+
+
+  myFormValidation()
+  {
+//    this.userName.setValidators([Validators.required])
+  
+//this.userName.setValidators([Validators.required,Validators.minLength(3)])
+  
+
+}
+
+
+
+  book=new Book();
+  
+  addBook()
+  {
+
+this.bookService.addBook(this.book).subscribe(
+
+  data=>{
+
+    alert('book added')
+  },
+  error=>{
+    console.log(error)
+  }
+)
+
+  }
+
+
+
+  //userName=new FormControl();
+  //email=new FormControl();
+
+  addForm=new FormGroup({
+    uname:new FormControl(),
+    email:new FormControl(),
+    
+
+  })
+
+  onMyFormSubmit()
+  {
+   
+    //console.log(this.userName.value);
+    //console.log(this.email.value);
+  
+    console.log(this.addForm.value);
+
+    if(this.addForm.valid)
+    alert('form is valid')
+    else
+    alert('form is invalid')
+  }
+
+
+
+}
+
+
+
+-----html 
+
+
+<!-- 
+
+<label> 
+    id
+</label>
+
+<input type="text" [(ngModel)]="book.id"> 
+
+<br>
+
+<label> 
+    isbn
+</label>
+<input type="text" [(ngModel)]="book.isbn" required=""> 
+<br>
+<label> 
+   title
+</label>
+<input type="text" [(ngModel)]="book.title"> 
+<br>
+
+<label> 
+    author
+</label>
+
+<input type="text" [(ngModel)]="book.author"> 
+
+<br>
+
+<label> 
+    rating
+</label>
+
+<input type="text" [(ngModel)]="book.rating"> 
+
+<br>
+
+<label> 
+    publication
+</label>
+
+<input type="text" [(ngModel)]="book.publication"> 
+
+<br>
+<button (click)="addBook()"> add book </button> -->
+
+
+<!-- 
+<form (ngSubmit)="onMyFormSubmit()"> 
+<input type="text" [formControl]="userName">
+
+<input type="text" [formControl]="email">
+
+<input type="submit"> 
+</form> -->
+
+
+
+<form [formGroup]="addForm" (ngSubmit)="onMyFormSubmit()"> 
+    <input type="text" formControlName="uname" required>
+    
+    <input type="text" formControlName="email" required>
+    
+    <input type="submit"> 
+    </form>
+
+
+
+
+
+
+
+
+
+
+
