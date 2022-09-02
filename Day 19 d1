@@ -1,0 +1,206 @@
+---------ap.comp.html 
+
+
+
+<label> 
+    id
+</label>
+
+<input type="text" [(ngModel)]="book.id"> 
+
+<br>
+
+<label> 
+    isbn
+</label>
+<input type="text" [(ngModel)]="book.isbn" required=""> 
+<br>
+<label> 
+   title
+</label>
+<input type="text" [(ngModel)]="book.title"> 
+<br>
+
+<label> 
+    author
+</label>
+
+<input type="text" [(ngModel)]="book.author"> 
+
+<br>
+
+<label> 
+    rating
+</label>
+
+<input type="text" [(ngModel)]="book.rating"> 
+
+<br>
+
+<label> 
+    publication
+</label>
+
+<input type="text" [(ngModel)]="book.publication"> 
+
+<br>
+
+
+<button (click)="addBook()"> add book </button>
+
+
+
+----------------------app.comp.ts 
+
+import { Component } from '@angular/core';
+import { Article } from 'src/artice.model';
+import { Book } from 'src/Book.model';
+import { BooksService } from './books.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'httpdemo2';
+
+
+  constructor(private bookService:BooksService){
+
+  }
+  
+  ngOnInit(): void {
+  }
+
+
+  book=new Book();
+  
+  addBook()
+  {
+
+this.bookService.addBook(this.book).subscribe(
+
+  data=>{
+
+    alert('book added')
+  },
+  error=>{
+    console.log(error)
+  }
+)
+
+  }
+
+
+
+}
+
+
+----------------------------------------------service
+
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Book } from 'src/Book.model';
+import { GifImages } from 'src/gifs.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class BooksService {
+
+  constructor(private http:HttpClient) { }
+
+
+  getNewsHeadlines()
+  {
+
+    return this.http.get('https://newsapi.org/v2/top-headlines?country=in&apiKey=87229b519983412ba54b0c374de74182');
+  }
+
+
+  getSportsHeadlines()
+  {
+
+    return this.http.get('https://newsapi.org/v2/top-headlines?country=in&category=sports&apiKey=87229b519983412ba54b0c374de74182');
+  }
+
+
+  getHealthHeadlines()
+  {
+
+    return this.http.get('https://newsapi.org/v2/top-headlines?country=in&category=health&apiKey=87229b519983412ba54b0c374de74182');
+  }
+
+
+
+
+  
+  searchNews(query:string)
+  {
+
+    return this.http.get('https://newsapi.org/v2/everything?q='+query+'&apiKey=87229b519983412ba54b0c374de74182');
+  }
+
+
+  trendingGif()
+  {
+
+    return this.http.get('https://api.giphy.com/v1/gifs/trending?api_key=3SZ34Ukz3s1DYZhrHnhHInO5VUWSn2Gb');
+  }
+
+  SearchgGif(search:string)
+  {
+
+    return this.http.get('https://api.giphy.com/v1/gifs/search?api_key=3SZ34Ukz3s1DYZhrHnhHInO5VUWSn2Gb&q='+search+'');
+  }
+
+  
+
+
+
+
+  caloriesAPi()
+  {
+
+    let headers=new HttpHeaders().set('x-api-key','KYhE6RIH8mp19PYoVf1Xxg==dDhiN2qKrDqJgLOK');
+
+    return this.http.get('  https://api.calorieninjas.com/v1/nutrition?query=1 egg',{headers});
+  }
+
+
+
+  addBook(book:Book)
+  {
+
+
+    return this.http.post<Book>('http://localhost:3000/books',book);
+  }
+
+
+
+
+
+}
+
+
+-------------------model 
+
+export class Book
+{
+
+    id=0;
+    isbn='';
+    title='';
+    author='';
+    publication='';
+    rating=0;
+
+}
+
+
+
+
+
+
+
