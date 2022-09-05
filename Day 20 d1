@@ -1,0 +1,38 @@
+<!-- template driven forms  -->
+
+
+<form #myform="ngForm" (ngSubmit)="sub(myform)"> 
+<input type="uname" name="uname" ngModel>
+<input type="pass" name="pass" ngModel> 
+
+<input type="submit"> 
+</form>
+
+
+---------------------ts 
+
+
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Article } from 'src/artice.model';
+import { Book } from 'src/Book.model';
+import { myValidator } from 'src/mycustom.validato';
+import { BooksService } from './books.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+
+  sub(myform:NgForm)
+  {
+
+    console.log(myform.value)
+    console.log(myform.controls['uname'].value)
+    
+
+  }
+}
