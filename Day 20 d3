@@ -1,0 +1,51 @@
+---------------------css
+
+
+/* input{
+    background-color: red;
+} */
+
+
+/* input{
+ border:solid red;
+} */
+
+
+/* input.ng-invalid{
+    border:solid red;
+} */
+
+input.ng-invalid.ng-touched{
+    border:solid red;
+}
+
+
+
+input.ng-valid.ng-dirty{
+    border:solid green;
+}
+
+
+
+
+---------------html 
+
+<!-- template driven forms  -->
+
+
+<form #myform="ngForm" (ngSubmit)="sub(myform)"> 
+uname <input type="uname" name="uname" #uname="ngModel" ngModel required>
+<p *ngIf="!uname.valid && uname.touched"> name cannot be blank</p>
+
+<br>
+password <input type="pass" name="pass" ngModel> 
+
+<input type="submit"> 
+</form>
+
+
+
+
+
+
+
