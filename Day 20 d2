@@ -1,0 +1,46 @@
+<!-- template driven forms  -->
+
+
+<form #myform="ngForm" (ngSubmit)="sub(myform)"> 
+uname <input type="uname" name="uname" #uname="ngModel" ngModel required>
+<p *ngIf="!uname.valid && uname.touched"> name cannot be blank</p>
+
+<br>
+password <input type="pass" name="pass" ngModel> 
+
+<input type="submit"> 
+</form>
+
+------------ts 
+
+
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Article } from 'src/artice.model';
+import { Book } from 'src/Book.model';
+import { myValidator } from 'src/mycustom.validato';
+import { BooksService } from './books.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+
+  sub(myform:NgForm)
+  {
+
+ if(myform.valid)
+ {
+  alert('submit data')
+ }
+
+ else
+ {
+  alert('invalid data ')
+ }
+
+  }
+}
